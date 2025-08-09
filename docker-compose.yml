@@ -1,0 +1,14 @@
+version: "3.9"                                           # version of dockercompose syntax we are using
+
+services:
+  app:                                                   # name of our service
+    build:                                         
+      context: .                                         # we want to build dockerfile inside current directory
+      args:
+        - DEV=true
+    ports:
+      - "9000:9000"                                      # maps port on our machine to port in docker container
+    volumes:
+      - ./app:/app                                       # maps directory on our system to directory in container, thanks to this we don't need to rebuild container every time we change the code and it's automatically sync code in our project with code in container
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:9000"
